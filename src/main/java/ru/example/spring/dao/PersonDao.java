@@ -18,6 +18,6 @@ public class PersonDao {
     }
 
     public List<Person> getAllPerson() {
-        return jdbcTemplate.query("SELECT * FROM person",new BeanPropertyRowMapper<>(Person.class));
+        return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
     }
 }

@@ -3,11 +3,16 @@ package ru.example.spring.models;
 public class Person {
     private int personId;
     private String FIO;
-    private int bitrthDate;
+    private int birthDate;
 
+    public Person() {}
     public Person(String FIO, int bitrthDate) {
         this.FIO = FIO;
-        this.bitrthDate = bitrthDate;
+        this.birthDate = bitrthDate;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public int getPersonId() {
@@ -22,11 +27,11 @@ public class Person {
         this.FIO = FIO;
     }
 
-    public int getBitrthDate() {
-        return bitrthDate;
+    public int getBirthDate() {
+        return birthDate;
     }
 
-    public void setBitrthDate(int bitrthDate) {
-        this.bitrthDate = bitrthDate;
+    public void setBirthDate(int birthDate) {
+        this.birthDate = birthDate;
     }
 }

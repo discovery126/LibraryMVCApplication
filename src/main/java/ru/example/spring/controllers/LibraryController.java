@@ -6,6 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.example.spring.dao.PersonDao;
+import ru.example.spring.dao.PersonMapper;
+import ru.example.spring.models.Person;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/people")

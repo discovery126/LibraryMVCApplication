@@ -1,12 +1,17 @@
-package spring.models;
+package ru.example.spring.models;
 
 public class Person {
+    private int personId;
     private String FIO;
     private int bitrthDate;
 
     public Person(String FIO, int bitrthDate) {
         this.FIO = FIO;
         this.bitrthDate = bitrthDate;
+    }
+
+    public int getPersonId() {
+        return personId;
     }
 
     public String getFIO() {

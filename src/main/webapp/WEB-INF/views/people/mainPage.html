@@ -7,11 +7,12 @@
 <body>
 <div th:each="person : ${people}">
     <a th:href="@{/people/{id}(id=${person.getPersonId()})}"
-       th:text="${person.getFIO() + ', ' + person.getBirthDate()}">user</a>
+       th:text="${person.getFio() + ', ' + person.getBirthDate()}">user</a>
 </div>
 
 <br/>
 <hr/>
 
+<a th:href="@{/people/new}">Создать нового человека</a>
 </body>
 </html>

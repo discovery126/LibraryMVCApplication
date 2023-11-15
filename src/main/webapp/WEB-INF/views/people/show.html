@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${person.getFio()}">Страница </title>
+</head>
+<body>
+<p th:text="${person.getFio() + ', ' + person.getBirthDate()}">VALUE</p>
+<br/>
+<a th:href="@{/people/{id}/edit(id=${person.getPersonId()})}">Edit</a>
+</body>
+</html>

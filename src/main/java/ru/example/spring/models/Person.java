@@ -2,12 +2,12 @@ package ru.example.spring.models;
 
 public class Person {
     private int personId;
-    private String FIO;
+    private String fio;
     private int birthDate;
 
     public Person() {}
-    public Person(String FIO, int bitrthDate) {
-        this.FIO = FIO;
+    public Person(String fio, int bitrthDate) {
+        this.fio = fio;
         this.birthDate = bitrthDate;
     }
 
@@ -19,12 +19,12 @@ public class Person {
         return personId;
     }
 
-    public String getFIO() {
-        return FIO;
+    public String getFio() {
+        return fio;
     }
 
-    public void setFIO(String FIO) {
-        this.FIO = FIO;
+    public void setFio(String fio) {
+        this.fio = fio;
     }
 
     public int getBirthDate() {

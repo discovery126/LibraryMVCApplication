@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.example.spring.dao.BookDao;
 import ru.example.spring.dao.PersonDao;
 import ru.example.spring.models.Person;
 
@@ -16,10 +17,12 @@ import java.util.List;
 public class PersonController {
 
     PersonDao personDao;
+    BookDao bookDao;
 
     @Autowired
-    public PersonController(PersonDao personDao) {
+    public PersonController(PersonDao personDao,BookDao bookDao) {
         this.personDao = personDao;
+        this.bookDao = bookDao;
     }
 
     @GetMapping()
@@ -43,6 +46,7 @@ public class PersonController {
     public String newPerson(@PathVariable("id") int id,
                             Model model) {
         model.addAttribute("person",personDao.getPerson(id));
+        model.addAttribute("books",bookDao.getBookPerson(id));
         return "people/show";
     }
     @GetMapping("/{id}/edit")

@@ -7,6 +7,10 @@
 <body>
 <p th:text="${person.getFio() + ', ' + person.getBirthDate()}">VALUE</p>
 <br/>
-<a th:href="@{/people/{id}/edit(id=${person.getPersonId()})}">Edit</a>
+<a th:href="@{/people/{id}/edit(id=${person.getPersonId()})}">Редактировать</a>
+
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getPersonId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
 </body>
 </html>

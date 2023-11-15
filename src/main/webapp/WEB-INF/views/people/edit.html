@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование профиля</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/people/{id}(id=${person.getPersonId()})}" th:object="${person}">
+    <fieldset>
+        <legend>Редактирование профиля</legend>
+        <label for="fio">Введите ФИО: </label>
+        <input type="text" th:field="*{fio}" id="fio"/>
+        <br/>
+        <label for="birthDate">Введите год рождения: </label>
+        <input type="text" th:field="*{birthDate}" id="birthDate"/>
+        <br/>
+        <br/>
+        <input type="submit" value="Редактировать">
+    </fieldset>
+</form>
+</body>
+</html>

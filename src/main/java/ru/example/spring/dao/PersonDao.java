@@ -18,7 +18,7 @@ public class PersonDao {
     }
 
     public List<Person> getAllPerson() {
-        return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
+        return jdbcTemplate.query("SELECT * FROM person ORDER BY person_id", new PersonMapper());
     }
 
     public void create(Person person) {
@@ -27,15 +27,18 @@ public class PersonDao {
                 person.getBirthDate()
         );
     }
-    public Person getPerson(@PathVariable("id") int id) {
+    public Person getPerson(int id) {
         List<Person> personList = jdbcTemplate.query("SELECT * FROM person WHERE person_id = ?", new Object[]{id},
                 new PersonMapper());
         return personList.stream().findAny().orElse(null);
     }
-//    public void update(Person updatedPerson, int id) {
-//        jdbcTemplate.update("UPDATE person SET fio=? birth_date=? WHERE person_id= ?",
-//                updatedPerson.getFio(),
-//                updatedPerson.getBirthDate(),
-//                id);
-//    }
+    public void update(Person updatedPerson, int id) {
+        jdbcTemplate.update("UPDATE person SET fio=?, birth_date=? WHERE person_id= ?",
+                updatedPerson.getFio(),
+                updatedPerson.getBirthDate(),
+                id);
+    }
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM person WHERE person_id=?", id);
+    }
 }

@@ -8,7 +8,7 @@
 
 <form th:method="POST" th:action="@{/people}" th:object="${person}">
     <fieldset>
-        <legend>Создание нового пользователя</legend>
+        <legend>Добавление нового пользователя</legend>
         <label for="fio">Введите ФИО: </label>
         <input type="text" th:field="*{fio}" id="fio"/>
         <br/>
@@ -16,7 +16,7 @@
         <input type="text" th:field="*{birthDate}" id="birthDate"/>
         <br/>
         <br/>
-        <input type="submit" value="Создать">
+        <input type="submit" value="Добавить">
     </fieldset>
 </form>
 </body>

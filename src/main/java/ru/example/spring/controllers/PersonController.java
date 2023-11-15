@@ -28,7 +28,7 @@ public class PersonController {
     @GetMapping()
     public String mainPage(Model model) {
         model.addAttribute("people",personDao.getAllPerson());
-        return "people/mainPage";
+        return "people/mainPagePerson";
     }
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("person") Person person) {

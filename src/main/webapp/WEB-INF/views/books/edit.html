@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование книги</title>
+</head>
+
+
+<body>
+<form th:method="PATCH" th:action="@{/books/{id}(id=${book.getBookId()})}" th:object="${book}">
+    <fieldset>
+        <legend>Редактирование книги</legend>
+        <label for="nameBook">Введите название книги: </label>
+        <input type="text" th:field="*{nameBook}" id="nameBook"/>
+        <br/>
+        <label for="authorBook">Введите автора книги </label>
+        <input type="text" th:field="*{authorBook}" id="authorBook"/>
+        <br/>
+        <label for="datePublication">Введите дату публикации книги </label>
+        <input type="text" th:field="*{datePublication}" id="datePublication"/>
+        <br/>
+        <br/>
+        <input type="submit" value="Редактировать">
+    </fieldset>
+</form>
+</body>
+</html>

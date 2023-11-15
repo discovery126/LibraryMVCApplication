@@ -1,27 +1,35 @@
 package ru.example.spring.models;
 
 public class Book {
-    private int book_id;
+    private int bookId;
     private String nameBook;
     private String authorBook;
     private int datePublication;
-    private int person_id;
+    private int personId;
 
     public Book() {}
 
-    public Book(String nameBook, String authorBook, int datePublication,int person_id) {
+    public Book(String nameBook, String authorBook, int datePublication, int personId) {
         this.nameBook = nameBook;
         this.authorBook = authorBook;
         this.datePublication = datePublication;
-        this.person_id = person_id;
+        this.personId = personId;
     }
 
-    public int getBook_id() {
-        return book_id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setBook_id(int book_id) {
-        this.book_id = book_id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public String getNameBook() {
@@ -48,11 +56,4 @@ public class Book {
         this.datePublication = datePublication;
     }
 
-    public int getPerson_id() {
-        return person_id;
-    }
-
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
-    }
 }

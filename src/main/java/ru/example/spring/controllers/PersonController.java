@@ -11,6 +11,9 @@ import ru.example.spring.dao.PersonDao;
 import ru.example.spring.models.Person;
 import ru.example.spring.util.PersonValidator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Controller
 @RequestMapping("/people")
 public class PersonController {
@@ -29,6 +32,7 @@ public class PersonController {
     @GetMapping()
     public String mainPage(Model model) {
         model.addAttribute("people",personDao.getAllPerson());
+
         return "people/mainPagePerson";
     }
     @GetMapping("/new")
@@ -53,12 +57,16 @@ public class PersonController {
         model.addAttribute("books",bookDao.getBookPerson(id));
         return "people/show";
     }
+
+
     @GetMapping("/{id}/edit")
     public String editPerson(@PathVariable("id") int id,
                              Model model) {
         model.addAttribute("person",personDao.getPerson(id));
         return "people/edit";
     }
+
+
     @PatchMapping("/{id}")
     public String update(@PathVariable("id") int id ,
                          @ModelAttribute("person") Person person,

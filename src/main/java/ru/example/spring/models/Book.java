@@ -1,9 +1,17 @@
 package ru.example.spring.models;
 
+import jakarta.validation.constraints.*;
+
 public class Book {
     private int bookId;
+    @Size(min = 1,max = 50,message = "Длина названия книги слишком маленькая или слишком большая")
+    @Pattern(regexp = "[А-ЯЁ][а-яё]+",message = "Название книги должно быть с большой буквы")
     private String nameBook;
+    @NotEmpty(message = "Автор не может быть пустым")
+    @Pattern(regexp = "[A-ZА-ЯЁ][a-zа-яё]+ [A-ZА-ЯЁ][a-zа-яё]+",message = "Имя и фамилия автора должно быть по шаблону 'Имя Фамилия'")
     private String authorBook;
+    @Min(value = 0,message = "Дата не может быть отрицательной")
+    @Max(value = 2023,message = "Дата не может быть больше текущего года")
     private int datePublication;
     private int personId;
 

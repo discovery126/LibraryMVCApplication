@@ -8,7 +8,7 @@ public class Person {
 
     private int personId;
     @Size(min = 5,max = 40,message = "Слишком короткое или слишком длинное ФИО")
-    @Pattern(regexp = "[А-Я]\\w+ [А-Я]\\w+ [А-Я]\\w+",message = "ФИО должно соответствовать шаблону 'Фамилия Имя Отчество'")
+    @Pattern(regexp = "[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+",message = "ФИО должно соответствовать шаблону 'Фамилия Имя Отчество'")
     private String fio;
     @Min(value = 1923, message = "Ошибка в годе рождения")
     @Max(value = 2010, message = "Ошибка в годе рождения")

@@ -12,12 +12,15 @@
         <legend>Редактирование книги</legend>
         <label for="nameBook">Введите название книги: </label>
         <input type="text" th:field="*{nameBook}" id="nameBook"/>
+        <div style="color: red" th:if="${#fields.hasErrors('nameBook')}" th:errors="*{nameBook}"> nameBook Error</div>
         <br/>
         <label for="authorBook">Введите автора книги </label>
         <input type="text" th:field="*{authorBook}" id="authorBook"/>
+        <div style="color: red" th:if="${#fields.hasErrors('authorBook')}" th:errors="*{authorBook}"> authorBook Error</div>
         <br/>
         <label for="datePublication">Введите дату публикации книги </label>
         <input type="text" th:field="*{datePublication}" id="datePublication"/>
+        <div style="color: red" th:if="${#fields.hasErrors('datePublication')}" th:errors="*{datePublication}"> datePublication Error</div>
         <br/>
         <br/>
         <input type="submit" value="Редактировать">

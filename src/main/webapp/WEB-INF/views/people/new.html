@@ -11,9 +11,11 @@
         <legend>Добавление нового пользователя</legend>
         <label for="fio">Введите ФИО: </label>
         <input type="text" th:field="*{fio}" id="fio"/>
+        <div style="color: red" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}"> fio Error</div>
         <br/>
         <label for="birthDate">Введите год рождения: </label>
         <input type="text" th:field="*{birthDate}" id="birthDate"/>
+        <div style="color: red" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"> birthDate Error</div>
         <br/>
         <br/>
         <input type="submit" value="Добавить">

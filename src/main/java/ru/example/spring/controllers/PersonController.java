@@ -9,20 +9,21 @@ import org.springframework.web.bind.annotation.*;
 import ru.example.spring.dao.BookDao;
 import ru.example.spring.dao.PersonDao;
 import ru.example.spring.models.Person;
-
-import java.util.List;
+import ru.example.spring.util.PersonValidator;
 
 @Controller
 @RequestMapping("/people")
 public class PersonController {
 
-    PersonDao personDao;
-    BookDao bookDao;
+    private final PersonDao personDao;
+    private final BookDao bookDao;
+    private final PersonValidator personValidator;
 
     @Autowired
-    public PersonController(PersonDao personDao,BookDao bookDao) {
+    public PersonController(PersonDao personDao, BookDao bookDao, PersonValidator personValidator) {
         this.personDao = personDao;
         this.bookDao = bookDao;
+        this.personValidator = personValidator;
     }
 
     @GetMapping()
@@ -35,9 +36,12 @@ public class PersonController {
         return "people/new";
     }
     @PostMapping()
-    public String create(@ModelAttribute("person") Person person) {
-//        if (bindingResult.hasErrors())
-//            return "people/new";
+    public String create(@ModelAttribute("person") @Valid Person person,
+                         BindingResult bindingResult) {
+        personValidator.validate(person,bindingResult);
+
+        if (bindingResult.hasErrors())
+            return "people/new";
 
         personDao.create(person);
         return "redirect:/people";
@@ -57,7 +61,13 @@ public class PersonController {
     }
     @PatchMapping("/{id}")
     public String update(@PathVariable("id") int id ,
-                         @ModelAttribute("person") Person person) {
+                         @ModelAttribute("person") Person person,
+                         BindingResult bindingResult) {
+        personValidator.validate(person,bindingResult);
+
+        if (bindingResult.hasErrors())
+            return "people/edit";
+
         personDao.update(person,id);
         return "redirect:/people";
     }

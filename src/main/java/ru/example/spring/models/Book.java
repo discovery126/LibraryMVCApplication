@@ -3,6 +3,8 @@ package ru.example.spring.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "book")
 public class Book {
@@ -77,6 +79,18 @@ public class Book {
         this.owner = owner;
         if (owner != null)
             owner.addBook(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+        return datePublication == book.datePublication && Objects.equals(nameBook, book.nameBook) && Objects.equals(authorBook, book.authorBook);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nameBook, authorBook, datePublication);
     }
 
     @Override

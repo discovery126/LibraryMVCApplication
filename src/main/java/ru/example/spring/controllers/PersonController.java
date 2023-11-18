@@ -6,9 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.example.spring.dao.BookDao;
-import ru.example.spring.dao.PersonDao;
+
 import ru.example.spring.models.Person;
+import ru.example.spring.services.BookService;
+import ru.example.spring.services.PersonService;
 import ru.example.spring.util.PersonValidator;
 
 import java.util.regex.Matcher;
@@ -18,20 +19,19 @@ import java.util.regex.Pattern;
 @RequestMapping("/people")
 public class PersonController {
 
-    private final PersonDao personDao;
-    private final BookDao bookDao;
+    private final PersonService personService;
+    private final BookService bookService;
     private final PersonValidator personValidator;
 
-    @Autowired
-    public PersonController(PersonDao personDao, BookDao bookDao, PersonValidator personValidator) {
-        this.personDao = personDao;
-        this.bookDao = bookDao;
+    public PersonController(PersonService personService, BookService bookService, PersonValidator personValidator) {
+        this.personService = personService;
+        this.bookService = bookService;
         this.personValidator = personValidator;
     }
 
     @GetMapping()
     public String mainPage(Model model) {
-        model.addAttribute("people",personDao.getAllPerson());
+        model.addAttribute("people",personService.findAll());
 
         return "people/mainPagePerson";
     }
@@ -47,14 +47,14 @@ public class PersonController {
         if (bindingResult.hasErrors())
             return "people/new";
 
-        personDao.create(person);
+        personService.save(person);
         return "redirect:/people";
     }
     @GetMapping("/{id}")
     public String newPerson(@PathVariable("id") int id,
                             Model model) {
-        model.addAttribute("person",personDao.getPerson(id));
-        model.addAttribute("books",bookDao.getBookPerson(id));
+        model.addAttribute("person",personService.findOne(id));
+        model.addAttribute("books",bookService.getOwnerBook(id));
         return "people/show";
     }
 
@@ -62,7 +62,7 @@ public class PersonController {
     @GetMapping("/{id}/edit")
     public String editPerson(@PathVariable("id") int id,
                              Model model) {
-        model.addAttribute("person",personDao.getPerson(id));
+        model.addAttribute("person",personService.findOne(id));
         return "people/edit";
     }
 
@@ -76,12 +76,12 @@ public class PersonController {
         if (bindingResult.hasErrors())
             return "people/edit";
 
-        personDao.update(person,id);
+        personService.update(id,person);
         return "redirect:/people";
     }
     @DeleteMapping("/{id}")
     public String update(@PathVariable("id") int id) {
-        personDao.delete(id);
+        personService.delete(id);
         return "redirect:/people";
     }
 }

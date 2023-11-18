@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "person")
@@ -72,6 +73,18 @@ public class Person {
             bookList = new ArrayList<>();
         }
         bookList.add(book);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person person)) return false;
+        return birthDate == person.birthDate && Objects.equals(fio, person.fio);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fio, birthDate);
     }
 
     @Override

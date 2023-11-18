@@ -27,7 +27,6 @@ public class BookController {
         this.bookDao = bookDao;
         this.personDao = personDao;
         this.bookValidation = bookValidation;
-
     }
 
     @GetMapping()
@@ -40,7 +39,7 @@ public class BookController {
         return "books/new";
     }
     @PostMapping()
-    public String create(@ModelAttribute("book")@Valid Book book,
+    public String create(@ModelAttribute("book") @Valid Book book,
                          BindingResult bindingResult) {
 
         bookValidation.validate(book,bindingResult);

@@ -1,27 +1,40 @@
 package ru.example.spring.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+@Entity
+@Table(name = "book")
 public class Book {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private int bookId;
+    @Column(name = "name_book")
     @Size(min = 1,max = 50,message = "Длина названия книги слишком маленькая или слишком большая")
-    @Pattern(regexp = "[А-ЯЁ][а-яё]+",message = "Название книги должно быть с большой буквы")
+    @Pattern(regexp = "[A-ZА-ЯЁ][a-zа-яё ]+",message = "Название книги должно быть с большой буквы")
     private String nameBook;
+
+    @Column(name = "author_book")
     @NotEmpty(message = "Автор не может быть пустым")
     @Pattern(regexp = "[A-ZА-ЯЁ][a-zа-яё]+ [A-ZА-ЯЁ][a-zа-яё]+",message = "Имя и фамилия автора должно быть по шаблону 'Имя Фамилия'")
     private String authorBook;
+
     @Min(value = 0,message = "Дата не может быть отрицательной")
     @Max(value = 2023,message = "Дата не может быть больше текущего года")
+    @Column(name = "date_publication")
     private int datePublication;
-    private int personId;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id",referencedColumnName = "person_id")
+    private Person owner;
 
     public Book() {}
 
-    public Book(String nameBook, String authorBook, int datePublication, int personId) {
+    public Book(String nameBook, String authorBook, int datePublication) {
         this.nameBook = nameBook;
         this.authorBook = authorBook;
         this.datePublication = datePublication;
-        this.personId = personId;
     }
 
     public int getBookId() {
@@ -30,14 +43,6 @@ public class Book {
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
-    }
-
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
     }
 
     public String getNameBook() {
@@ -64,4 +69,22 @@ public class Book {
         this.datePublication = datePublication;
     }
 
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+        if (owner != null)
+            owner.addBook(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "nameBook='" + nameBook + '\'' +
+                ", authorBook='" + authorBook + '\'' +
+                ", datePublication=" + datePublication +
+                '}';
+    }
 }

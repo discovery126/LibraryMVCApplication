@@ -1,58 +1,65 @@
 package ru.example.spring.dao;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.transaction.annotation.Transactional;
 import ru.example.spring.models.Person;
-import ru.example.spring.util.PersonValidator;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Component
 public class PersonDao {
-    private JdbcTemplate jdbcTemplate;
+    private final SessionFactory sessionFactory;
 
-    public PersonDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    @Autowired
+    public PersonDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
+
+    @Transactional(readOnly = true)
     public List<Person> getAllPerson() {
-        return jdbcTemplate.query("SELECT * FROM person ORDER BY person_id", new PersonMapper());
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select p from Person p",Person.class).getResultList();
     }
 
+    @Transactional
     public void create(Person person) {
-        jdbcTemplate.update("INSERT INTO person(fio, birth_date) VALUES(?, ?)",
-                person.getFio(),
-                person.getBirthDate()
-        );
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(person);
     }
 
 
+    @Transactional
     public Person getPerson(int id) {
-        List<Person> personList = jdbcTemplate.query("SELECT * FROM person WHERE person_id = ?", new Object[]{id},
-                new PersonMapper());
-        return personList.stream().findAny().orElse(null);
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Person.class,id);
     }
 
 
+    @Transactional(readOnly = true)
     public Optional<Person> getPerson(String fio) {
-        List<Person> personList = jdbcTemplate.query("SELECT * FROM person WHERE fio=?", new Object[]{fio},
-                new PersonMapper());
-        return  personList.stream().findAny();
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select p from Person p where fio=:fio", Person.class)
+                .setParameter("fio", fio).stream().findAny();
     }
 
 
+    @Transactional
     public void update(Person updatedPerson, int id) {
-        jdbcTemplate.update("UPDATE person SET fio=?, birth_date=? WHERE person_id= ?",
-                updatedPerson.getFio(),
-                updatedPerson.getBirthDate(),
-                id);
+        Session session = sessionFactory.getCurrentSession();
+        Person person = session.get(Person.class,id);
+        person.setFio(updatedPerson.getFio());
+        person.setBirthDate(updatedPerson.getBirthDate());
     }
 
-
+    @Transactional
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM person WHERE person_id=?", id);
+        Session session = sessionFactory.getCurrentSession();
+        Person person = session.get(Person.class,id);
+        session.remove(person);
     }
 }

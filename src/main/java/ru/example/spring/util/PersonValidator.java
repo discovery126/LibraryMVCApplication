@@ -24,8 +24,8 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-        if (personService.findOne(person.getFio())!=null) {
-            errors.rejectValue("fio","","Человек с таким ФИО уже существует");
+        if (personService.findOne(person.getFio()) != null) {
+            errors.rejectValue("fio", "", "Человек с таким ФИО уже существует");
         }
 
     }

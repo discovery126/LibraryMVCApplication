@@ -1,12 +1,9 @@
 package ru.example.spring.services;
 
-import org.hibernate.type.SpecialOneToOneType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.example.spring.models.Person;
-import ru.example.spring.repositories.BookRepository;
 import ru.example.spring.repositories.PersonRepository;
 
 import java.util.List;
@@ -22,6 +19,7 @@ public class PersonService {
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
+
     public List<Person> findAll() {
         return personRepository.findAll();
     }
@@ -38,6 +36,7 @@ public class PersonService {
     public Person getOwnerBook(int bookId) {
         return personRepository.getOwnerBook(bookId);
     }
+
     @Transactional
     public void save(Person person) {
         personRepository.save(person);

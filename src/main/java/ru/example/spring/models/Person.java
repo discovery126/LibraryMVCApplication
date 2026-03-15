@@ -1,10 +1,11 @@
 package ru.example.spring.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,13 @@ import java.util.Objects;
 @Table(name = "person")
 public class Person {
 
-    @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
     private int personId;
 
-    @Size(min = 5,max = 40,message = "Слишком короткое или слишком длинное ФИО")
-    @Pattern(regexp = "[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+",message = "ФИО должно соответствовать шаблону 'Фамилия Имя Отчество'")
+    @Size(min = 5, max = 40, message = "Слишком короткое или слишком длинное ФИО")
+    @Pattern(regexp = "[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+", message = "ФИО должно соответствовать шаблону 'Фамилия Имя Отчество'")
     @Column(name = "fio")
     private String fio;
     @Min(value = 1923, message = "Ошибка в годе рождения")
@@ -31,7 +33,9 @@ public class Person {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Book> bookList;
 
-    public Person() {}
+    public Person() {
+    }
+
     public Person(String fio, int bitrthDate) {
         this.fio = fio;
         this.birthDate = bitrthDate;
@@ -68,6 +72,7 @@ public class Person {
     public void setBookList(List<Book> bookList) {
         this.bookList = bookList;
     }
+
     public void addBook(Book book) {
         if (bookList == null) {
             bookList = new ArrayList<>();

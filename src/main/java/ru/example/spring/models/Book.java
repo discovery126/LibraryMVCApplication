@@ -9,29 +9,31 @@ import java.util.Objects;
 @Table(name = "book")
 public class Book {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
     private int bookId;
     @Column(name = "name_book")
-    @Size(min = 1,max = 50,message = "Длина названия книги слишком маленькая или слишком большая")
-    @Pattern(regexp = "[A-ZА-ЯЁ][a-zа-яё ]+",message = "Название книги должно быть с большой буквы")
+    @Size(min = 1, max = 50, message = "Длина названия книги слишком маленькая или слишком большая")
+    @Pattern(regexp = "[A-ZА-ЯЁ][a-zа-яё ]+", message = "Название книги должно быть с большой буквы")
     private String nameBook;
 
     @Column(name = "author_book")
     @NotEmpty(message = "Автор не может быть пустым")
-    @Pattern(regexp = "[A-ZА-ЯЁ][a-zа-яё]+ [A-ZА-ЯЁ][a-zа-яё]+",message = "Имя и фамилия автора должно быть по шаблону 'Имя Фамилия'")
+    @Pattern(regexp = "[A-ZА-ЯЁ][a-zа-яё]+ [A-ZА-ЯЁ][a-zа-яё]+", message = "Имя и фамилия автора должно быть по шаблону 'Имя Фамилия'")
     private String authorBook;
 
-    @Min(value = 0,message = "Дата не может быть отрицательной")
-    @Max(value = 2023,message = "Дата не может быть больше текущего года")
+    @Min(value = 0, message = "Дата не может быть отрицательной")
+    @Max(value = 2023, message = "Дата не может быть больше текущего года")
     @Column(name = "date_publication")
     private int datePublication;
 
     @ManyToOne
-    @JoinColumn(name = "person_id",referencedColumnName = "person_id")
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
     private Person owner;
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(String nameBook, String authorBook, int datePublication) {
         this.nameBook = nameBook;

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import java.util.EnumSet;
 
-public class SpringMvcDispatcherServletInitializer  extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class SpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return null;
@@ -18,12 +18,12 @@ public class SpringMvcDispatcherServletInitializer  extends AbstractAnnotationCo
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {SpringConfig.class};
+        return new Class[]{SpringConfig.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] {"/"};
+        return new String[]{"/"};
     }
 
     @Override
@@ -35,8 +35,9 @@ public class SpringMvcDispatcherServletInitializer  extends AbstractAnnotationCo
 
     private void registerHiddenFieldFilter(ServletContext aContext) {
         aContext.addFilter("hiddenHttpMethodFilter",
-                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
+                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null, true, "/*");
     }
+
     private void registerCharacterEncodingFilter(ServletContext aContext) {
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
 

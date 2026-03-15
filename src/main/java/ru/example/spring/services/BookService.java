@@ -32,9 +32,11 @@ public class BookService {
         Optional<Book> foundBook = bookRepository.findById(id);
         return foundBook.orElse(null);
     }
+
     public Book findOne(String nameBook) {
-       return bookRepository.findByNameBook(nameBook);
+        return bookRepository.findByNameBook(nameBook);
     }
+
     public List<Book> getOwnerBook(int personId) {
         return bookRepository.getBookPerson(personId);
     }
@@ -48,6 +50,7 @@ public class BookService {
     public void update(Book updatedBook) {
         bookRepository.save(updatedBook);
     }
+
     @Transactional
     public void update(int id, Book updatedBook) {
         updatedBook.setBookId(id);
@@ -55,7 +58,7 @@ public class BookService {
     }
 
     @Transactional
-    public void realese(int id) {
+    public void release(int id) {
         Optional<Book> bookOptional = bookRepository.findById(id);
         Book book;
         if (bookOptional.isPresent()) {
@@ -67,6 +70,7 @@ public class BookService {
         System.out.println("realese method ERROR");
 
     }
+
     @Transactional
     public void assign(int personId, int bookId) {
         Optional<Book> bookOptional = bookRepository.findById(bookId);
@@ -82,6 +86,7 @@ public class BookService {
         }
         System.out.println("assign method ERROR");
     }
+
     @Transactional
     public void delete(int id) {
         bookRepository.deleteById(id);
